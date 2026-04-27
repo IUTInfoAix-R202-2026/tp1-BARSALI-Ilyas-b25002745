@@ -1,6 +1,16 @@
 package fr.univ_amu.iut.exercice4;
 
 import javafx.application.Application;
+import javafx.geometry.Insets; // Indispensable pour 'new Insets(10)'
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Menu; // Import indispensable pour 'Menu'
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 /**
@@ -44,6 +54,32 @@ public class MiseEnPage extends Application {
     // Donne un id CSS utile sur les composants si tu veux les retrouver
     // facilement (les tests utilisent lookup sur les classes ".text-field"
     // et ".button", pas besoin d'id particulier).
+    BorderPane borderPane = new BorderPane();
+
+    Menu menuFichier = new Menu("Fichier");
+    Menu menuAide = new Menu("Aide");
+    MenuBar menuBar = new MenuBar(menuFichier, menuAide);
+    borderPane.setTop(menuBar);
+
+    GridPane grid = new GridPane();
+    grid.add(new Label("Nom :"), 0, 0);
+    grid.add(new TextField(), 1, 0);
+    grid.add(new Label("Email :"), 0, 1);
+    grid.add(new TextField(), 1, 1);
+    borderPane.setCenter(grid);
+
+    Button buttonValid = new Button("Valider");
+    Button buttonAnnuler = new Button("Annuler");
+    HBox button = new HBox(buttonValid, buttonAnnuler);
+    button.setSpacing(10);
+    button.setPadding(new Insets(10));
+    borderPane.setBottom(button);
+    buttonValid.setId("valider");
+    buttonAnnuler.setId("annuler");
+
+    Scene scene = new Scene(borderPane);
+    primaryStage.setScene(scene);
+    primaryStage.show();
   }
 
   public static void main(String[] args) {
