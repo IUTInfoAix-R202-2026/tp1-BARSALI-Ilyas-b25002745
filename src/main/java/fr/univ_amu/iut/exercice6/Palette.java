@@ -1,42 +1,19 @@
 package fr.univ_amu.iut.exercice6;
 
 import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-/**
- * Exercice 6 - Palette de couleurs (capstone).
- *
- * <p>Dernier exercice du TP : synthèse des concepts vus jusqu'ici (layout, boutons, événements,
- * mise à jour d'un label) sur une petite application autonome.
- *
- * <h3>Comportement attendu</h3>
- *
- * <pre>
- * ┌──────────────────────────────┐
- * │ [Rouge] [Vert] [Bleu]        │  ← HBox de 3 boutons
- * ├──────────────────────────────┤
- * │                              │
- * │     (zone de couleur)        │  ← Pane "#zone" dont le fond change
- * │                              │
- * ├──────────────────────────────┤
- * │ Rouge: 0  Vert: 0  Bleu: 0   │  ← Label "#compteurs"
- * └──────────────────────────────┘
- * </pre>
- *
- * <p>Chaque clic sur un bouton :
- *
- * <ul>
- *   <li>change la couleur de fond de la zone centrale ;
- *   <li>incrémente le compteur correspondant dans le label du bas.
- * </ul>
- *
- * <p>Les trois compteurs sont indépendants : cliquer "Rouge" n'affecte pas les compteurs "Vert" et
- * "Bleu".
- */
 public class Palette extends Application {
 
   @Override
   public void start(Stage primaryStage) {
+
     // TODO exercice 6 : implémenter la palette décrite dans la Javadoc.
     //
     // Stratégie conseillée :
@@ -60,6 +37,56 @@ public class Palette extends Application {
     // 6. Attention au format du texte du label : les tests vérifient la
     //    présence exacte des substrings "Rouge: 2", "Vert: 0", "Bleu: 1"
     //    après une séquence de clics.
+    BorderPane borderPane = new BorderPane();
+
+    Button btnRouge = new Button("Rouge");
+    btnRouge.setId("btn-rouge");
+
+    Button btnVert = new Button("Vert");
+    btnVert.setId("btn-vert");
+
+    Button btnBleu = new Button("Bleu");
+    btnBleu.setId("btn-bleu");
+
+    HBox hbox = new HBox(btnRouge, btnVert, btnBleu);
+    borderPane.setTop(hbox);
+
+    Pane zone = new Pane();
+    zone.setId("zone");
+    zone.setMinSize(300, 200);
+    borderPane.setCenter(zone);
+
+    Label compteurs = new Label("Rouge: 0  Vert: 0  Bleu: 0");
+    compteurs.setId("compteurs");
+    borderPane.setBottom(compteurs);
+
+    int[] cRouge = {0};
+    int[] cVert = {0};
+    int[] cBleu = {0};
+
+    btnRouge.setOnAction(
+        e -> {
+          zone.setStyle("-fx-background-color: red;");
+          cRouge[0]++;
+          compteurs.setText("Rouge: " + cRouge[0] + "  Vert: " + cVert[0] + "  Bleu: " + cBleu[0]);
+        });
+
+    btnVert.setOnAction(
+        e -> {
+          zone.setStyle("-fx-background-color: green;");
+          cVert[0]++;
+          compteurs.setText("Rouge: " + cRouge[0] + "  Vert: " + cVert[0] + "  Bleu: " + cBleu[0]);
+        });
+
+    btnBleu.setOnAction(
+        e -> {
+          zone.setStyle("-fx-background-color: blue;");
+          cBleu[0]++;
+          compteurs.setText("Rouge: " + cRouge[0] + "  Vert: " + cVert[0] + "  Bleu: " + cBleu[0]);
+        });
+
+    primaryStage.setScene(new Scene(borderPane));
+    primaryStage.show();
   }
 
   public static void main(String[] args) {
