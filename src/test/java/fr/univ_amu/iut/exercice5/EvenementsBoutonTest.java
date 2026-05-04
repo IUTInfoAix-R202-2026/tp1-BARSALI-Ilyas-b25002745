@@ -6,20 +6,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.testfx.api.FxRobot;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
 
-/**
- * Tests d'intégration de l'exercice 5 : construction progressive de l'IHM puis vérification du
- * comportement "bouton cliqué → label mis à jour".
- *
- * <p>Le style d'écouteur (classe nommée, classe anonyme, lambda) n'a pas d'impact sur ces tests :
- * les trois produisent le même résultat.
- */
 @ExtendWith(ApplicationExtension.class)
 class EvenementsBoutonTest {
 
@@ -31,73 +23,45 @@ class EvenementsBoutonTest {
     new EvenementsBouton().start(stage);
   }
 
-  // --- Étape 1 : afficher la fenêtre ---
-
-  @Disabled("Retire cette annotation pour activer le test")
   @Test
   void laFenetreEstVisible(FxRobot robot) {
-    assertThat(stage.isShowing())
-        .as("le Stage doit être affiché - appelle show() à la fin de start()")
-        .isTrue();
+    assertThat(stage.isShowing()).isTrue();
   }
 
-  // --- Étape 2 : créer une Scene ---
-
-  @Disabled("Retire cette annotation pour activer le test")
   @Test
   void laSceneExiste(FxRobot robot) {
-    assertThat(stage.getScene())
-        .as("le Stage doit avoir une Scene attachée via setScene()")
-        .isNotNull();
+    assertThat(stage.getScene()).isNotNull();
   }
 
-  @Disabled("Retire cette annotation pour activer le test")
   @Test
   void laRacineEstUnVBox(FxRobot robot) {
-    assertThat(stage.getScene().getRoot())
-        .as("la racine de la Scene doit être un VBox (empilement vertical bouton + label)")
-        .isInstanceOf(VBox.class);
+    assertThat(stage.getScene().getRoot()).isInstanceOf(VBox.class);
   }
 
-  // --- Étape 3 : ajouter un bouton ---
-
-  @Disabled("Retire cette annotation pour activer le test")
   @Test
   void leBoutonExiste(FxRobot robot) {
     Button bouton = robot.lookup("#bouton-clique-moi").queryAs(Button.class);
-    assertThat(bouton).as("un Button avec l'id 'bouton-clique-moi' doit être présent").isNotNull();
+    assertThat(bouton).isNotNull();
   }
 
-  // --- Étape 4 : le bouton a le bon texte ---
-
-  @Disabled("Retire cette annotation pour activer le test")
   @Test
   void leBoutonAfficheLeBonTexte(FxRobot robot) {
     Button bouton = robot.lookup("#bouton-clique-moi").queryAs(Button.class);
-    assertThat(bouton.getText()).as("le bouton doit afficher 'Clique-moi'").isEqualTo("Clique-moi");
+    assertThat(bouton.getText()).isEqualTo("Clique-moi");
   }
 
-  // --- Étape 5 : ajouter un label pour le compteur ---
-
-  @Disabled("Retire cette annotation pour activer le test")
   @Test
   void leLabelCompteurExiste(FxRobot robot) {
     Label compteur = robot.lookup("#compteur").queryAs(Label.class);
-    assertThat(compteur).as("un Label avec l'id 'compteur' doit être présent").isNotNull();
+    assertThat(compteur).isNotNull();
   }
 
-  @Disabled("Retire cette annotation pour activer le test")
   @Test
   void leLabelAfficheZeroClicsInitialement(FxRobot robot) {
     Label compteur = robot.lookup("#compteur").queryAs(Label.class);
-    assertThat(compteur.getText())
-        .as("avant tout clic, le label doit afficher exactement '0 clics'")
-        .isEqualTo("0 clics");
+    assertThat(compteur.getText()).isEqualTo("0 clics");
   }
 
-  // --- Étape 6 : brancher l'écouteur et vérifier le comportement ---
-
-  @Disabled("Retire cette annotation pour activer le test")
   @Test
   void troisClicsAffichent3Clics(FxRobot robot) {
     Button bouton = robot.lookup("#bouton-clique-moi").queryAs(Button.class);
